@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/assets/rect234.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Break-In: Cybersecurity Challenge</title>
+  </head>
+  <body>
+    <div id="startScreen" class="start-screen">
+      <h1>Digital Break-In</h1>
+      <div class="game-description">
+        <h2>Welcome, Future Security Expert!</h2>
+        <p>Learn about password security through this interactive challenge.</p>
+        
+        <div class="objectives">
+          <h3>Your Mission:</h3>
+          <ul>
+            <li>🔍 Find personal information around the room</li>
+            <li>📱 Unlock a phone using gathered information</li>
+            <li>🔐 Access the computer using either:</li>
+            <ul>
+              <li>- Password based on personal info</li>
+              <li>- OTP from the phone</li>
+            </ul>
+          </ul>
+        </div>
+
+        <div class="controls">
+          <h3>Controls:</h3>
+          <p>Use arrow keys to move the character</p>
+        </div>
+      </div>
+      <button id="startButton" class="start-button">Start Mission</button>
+    </div>
+    <main id="gameContainer" style="display: none;">
+      <canvas id="gameCanvas"></canvas>
+    </main>
+    <footer>
+      <p></p>
+    </footer>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
