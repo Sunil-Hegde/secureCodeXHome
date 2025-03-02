@@ -41,9 +41,7 @@ function startGame() {
       this.passwordPrompted = false;
       this.flashMessage = null;
       this.successMessage = null;
-      this.timer = 0;
-      this.timerText = null;
-      this.timeLimit = 600; // 5 minutes in seconds
+      // Timer-related variables removed
     }
 
     preload() {
@@ -89,9 +87,10 @@ function startGame() {
       this.cursor = this.input.keyboard.createCursorKeys();
       this.player.setCollideWorldBounds(true);
 
-      this.timerText = this.add
-        .text(sizes.width - 20, 20, "00:00", {
-          font: "24px Arial",
+      // Add treasure hunt button
+      const treasureHuntButton = this.add
+        .text(20, 20, "Treasure Hunt", {
+          font: "20px Arial",
           fill: "#00ff00",
           backgroundColor: "#000000",
           padding: { x: 10, y: 5 },
@@ -99,15 +98,27 @@ function startGame() {
           stroke: "#00ff00",
           strokeThickness: 1,
         })
-        .setOrigin(1, 0);
+        .setOrigin(0, 0)
+        .setInteractive({ useHandCursor: true });
 
-      // Start the timer
-      this.time.addEvent({
-        delay: 1000,
-        callback: this.updateTimer,
-        callbackScope: this,
-        loop: true,
+      // Add treasure hunt button click event
+      treasureHuntButton.on("pointerdown", () => {
+        window.open("https://treasure-hunt-umber.vercel.app/", "_blank");
       });
+
+      // Add ESC key handler to go back to start screen
+      this.input.keyboard.on("keydown-ESC", () => {
+        const startScreen = document.getElementById("startScreen");
+        const gameContainer = document.getElementById("gameContainer");
+
+        gameContainer.style.display = "none";
+        startScreen.style.display = "flex";
+
+        // Reset game state if needed
+        this.restartGame();
+      });
+
+      // Timer text and event removed
     }
 
     showFlashMessage(message, color = "#ffffff") {
@@ -140,7 +151,6 @@ function startGame() {
         hold: 1000,
         onComplete: () => {
           if (this.flashMessage) {
-            // Add null check here
             this.flashMessage.destroy();
             this.flashMessage = null;
           }
@@ -347,36 +357,10 @@ function startGame() {
       }
     }
 
-    updateTimer() {
-      this.timer += 1;
-      const timeLeft = this.timeLimit - this.timer;
-
-      if (timeLeft <= 0) {
-        // Time's up!
-        this.showGameOver();
-        // Disable player movement
-        this.player.setVelocity(0);
-        this.player.body.moves = false;
-        return;
-      }
-
-      const minutes = Math.floor(timeLeft / 60);
-      const seconds = timeLeft % 60;
-      this.timerText.setText(
-        `${minutes.toString().padStart(2, "0")}:${seconds
-          .toString()
-          .padStart(2, "0")}`
-      );
-
-      // Change timer color to red when less than 30 seconds remain
-      if (timeLeft <= 30) {
-        this.timerText.setFill("#ff0000");
-      }
-    }
+    // updateTimer method removed
 
     restartGame() {
       // Reset all game state
-      this.timer = 0;
       this.phoneUnlocked = false;
       this.phonePrompted = false;
       this.idPrompted = false;
@@ -387,14 +371,13 @@ function startGame() {
       this.player.setPosition(255, sizes.height - 100);
       this.player.body.moves = true;
 
-      // Reset timer color
-      this.timerText.setFill("#00ff00");
-
       if (this.flashMessage) {
         this.flashMessage.destroy();
         this.flashMessage = null;
       }
     }
+
+    // showGameOver() method can be removed or modified to not reference timer
   }
 
   const config = {
